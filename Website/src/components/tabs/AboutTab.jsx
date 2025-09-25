@@ -13,35 +13,26 @@ import {
   AccordionSummary,
   AccordionDetails
 } from '@mui/material';
-import {
-  ExpandMore as ExpandMoreIcon,
-  Water as WaterIcon,
-  Eco as EcoIcon,
-  MonetizationOn as MoneyIcon,
-  Security as SecurityIcon,
-  Info as InfoIcon,
-  Warning as WarningIcon
-} from '@mui/icons-material';
 
 const AboutTab = () => {
   const benefits = [
     {
-      icon: <WaterIcon color="primary" />,
+      icon: <span style={{ color: '#1976d2', fontSize: '24px' }}>💧</span>,
       title: 'Water Security',
       description: 'Reduce dependency on municipal supply and ensure water availability during droughts'
     },
     {
-      icon: <EcoIcon color="success" />,
+      icon: <span style={{ color: '#2e7d32', fontSize: '24px' }}>🌱</span>,
       title: 'Environmental Impact',
       description: 'Conserve groundwater, reduce stormwater runoff, and contribute to sustainability'
     },
     {
-      icon: <MoneyIcon color="warning" />,
+      icon: <span style={{ color: '#ed6c02', fontSize: '24px' }}>💰</span>,
       title: 'Cost Savings',
       description: 'Significant reduction in water bills with relatively quick payback period'
     },
     {
-      icon: <SecurityIcon color="secondary" />,
+      icon: <span style={{ color: '#9c27b0', fontSize: '24px' }}>🛡️</span>,
       title: 'Future Resilience',
       description: 'Prepare for water scarcity and climate change impacts'
     }
@@ -187,7 +178,7 @@ const AboutTab = () => {
           <Card elevation={3}>
             <CardContent>
               <Box display="flex" alignItems="center" mb={2}>
-                <InfoIcon color="secondary" sx={{ mr: 1 }} />
+                <span style={{ color: '#9c27b0', fontSize: '24px', marginRight: '8px' }}>ℹ️</span>
                 <Typography variant="h6" color="secondary">
                   Data Sources
                 </Typography>
@@ -216,7 +207,7 @@ const AboutTab = () => {
           </Typography>
           {faqs.map((faq, index) => (
             <Accordion key={index} elevation={2}>
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <AccordionSummary expandIcon={<span style={{ fontSize: '20px' }}>▼</span>}>
                 <Typography variant="subtitle1">
                   {faq.question}
                 </Typography>
@@ -235,7 +226,7 @@ const AboutTab = () => {
           <Card elevation={2} sx={{ bgcolor: 'warning.light' }}>
             <CardContent>
               <Box display="flex" alignItems="center" mb={1}>
-                <WarningIcon color="warning" sx={{ mr: 1 }} />
+                <span style={{ color: '#ed6c02', fontSize: '24px', marginRight: '8px' }}>⚠️</span>
                 <Typography variant="h6" color="warning.dark">
                   Important Disclaimer
                 </Typography>

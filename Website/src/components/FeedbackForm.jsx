@@ -12,7 +12,6 @@ import {
   Snackbar,
   Alert
 } from '@mui/material';
-import { RateReview as FeedbackIcon } from '@mui/icons-material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import apiService from '../services/apiService';
@@ -64,7 +63,7 @@ const FeedbackForm = () => {
     <>
       <Button
         variant="outlined"
-        startIcon={<FeedbackIcon />}
+        startIcon={<span style={{ fontSize: '18px' }}>📝</span>}
         onClick={() => setOpen(true)}
         sx={{ mt: 2 }}
       >

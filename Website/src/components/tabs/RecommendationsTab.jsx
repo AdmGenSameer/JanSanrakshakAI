@@ -12,14 +12,8 @@ import {
   ListItemIcon,
   ListItemText
 } from '@mui/material';
-import {
-  CheckCircle as CheckIcon,
-  Build as BuildIcon,
-  AttachMoney as CostIcon,
-  Timeline as BenefitIcon
-} from '@mui/icons-material';
 
-import { useAppContext } from '../../context/AppContext';
+import { useAppContext } from '../../context/useAppContext';
 import CostBenefitChart from '../charts/CostBenefitChart';
 import { formatCurrency } from '../../utils/calculations';
 
@@ -32,12 +26,20 @@ const RecommendationsTab = () => {
     return null;
   }
 
+  // Customize implementation steps based on soil type
+  const soilSpecificStep = user_data?.soil_type === 'Sandy' ? 'Percolation pit excavation and lining' :
+                          user_data?.soil_type === 'Clay' ? 'Surface tank platform and foundation work' :
+                          user_data?.soil_type === 'Loamy' ? 'Recharge well drilling and casing installation' :
+                          'Excavation and foundation work';
+
   const implementationSteps = [
-    'Site survey and soil analysis',
-    'Obtain necessary permits',
-    'Excavation and foundation work',
-    'Tank installation and plumbing',
-    'Filtration system setup',
+    'Site survey and detailed soil testing',
+    'Obtain necessary permits and clearances',
+    soilSpecificStep,
+    results.recommendedStructure === 'Underground Tank' ? 'Tank installation and waterproofing' : 
+    (results.recommendedStructure === 'Percolation Pit' ? 'Filter media layering and inspection chamber construction' :
+     results.recommendedStructure === 'Surface Storage Tank' ? 'Tank assembly and plumbing' : 'Well screen installation and gravel packing'),
+    'First flush diverter and filtration system setup',
     'Connection to existing water supply',
     'System testing and commissioning'
   ];
@@ -62,7 +64,7 @@ const RecommendationsTab = () => {
           <Card elevation={3} sx={{ height: 'fit-content' }}>
             <CardContent>
               <Box display="flex" alignItems="center" mb={2}>
-                <BuildIcon color="primary" sx={{ mr: 1 }} />
+                <span style={{ color: '#1976d2', fontSize: '24px', marginRight: '8px' }}>🔧</span>
                 <Typography variant="h6" color="primary">
                   Recommended RWH Structure
                 </Typography>
@@ -98,7 +100,7 @@ const RecommendationsTab = () => {
           <Card elevation={3}>
             <CardContent>
               <Box display="flex" alignItems="center" mb={2}>
-                <CostIcon color="warning" sx={{ mr: 1 }} />
+                <span style={{ color: '#ed6c02', fontSize: '24px', marginRight: '8px' }}>💰</span>
                 <Typography variant="h6" color="warning.main">
                   Investment & Returns
                 </Typography>
@@ -172,8 +174,8 @@ const RecommendationsTab = () => {
         <Grid item xs={12} md={6}>
           <Card elevation={3}>
             <CardContent>
-              <Box display="flex" alignItems="center" mb={2}>
-                <BenefitIcon color="success" sx={{ mr: 1 }} />
+                            <Box display="flex" alignItems="center" mb={2}>
+                <span style={{ color: '#2e7d32', fontSize: '24px', marginRight: '8px' }}>📈</span>
                 <Typography variant="h6" color="success.main">
                   Key Benefits
                 </Typography>
@@ -182,7 +184,7 @@ const RecommendationsTab = () => {
                 {benefits.map((benefit, index) => (
                   <ListItem key={index}>
                     <ListItemIcon>
-                      <CheckIcon color="success" fontSize="small" />
+                      <span style={{ color: 'green', fontSize: '16px' }}>✓</span>
                     </ListItemIcon>
                     <ListItemText 
                       primary={benefit}

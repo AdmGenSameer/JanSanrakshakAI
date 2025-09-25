@@ -1,16 +1,10 @@
 import React from 'react';
 import { Grid, Typography, Box } from '@mui/material';
-import {
-  WaterDrop as WaterIcon,
-  Home as StructureIcon,
-  AttachMoney as CostIcon,
-  Schedule as TimeIcon
-} from '@mui/icons-material';
 
 import UserInputForm from '../UserInputForm';
 import MetricsCard from '../MetricsCard';
 import MonthlyRainfallChart from '../charts/MonthlyRainfallChart';
-import { useAppContext } from '../../context/AppContext';
+import { useAppContext } from '../../context/useAppContext';
 
 const AssessmentTab = () => {
   const { state } = useAppContext();
@@ -34,7 +28,7 @@ const AssessmentTab = () => {
                 value={results.harvestableWater}
                 unit="L/year"
                 color="primary"
-                icon={<WaterIcon />}
+                icon="💧"
                 description="Annual rainwater that can be harvested"
               />
             </Grid>
@@ -44,7 +38,7 @@ const AssessmentTab = () => {
                 title="Recommended Structure"
                 value={results.recommendedStructure}
                 color="secondary"
-                icon={<StructureIcon />}
+                icon="🏠"
                 description="Best suited RWH system for your site"
               />
             </Grid>
@@ -55,7 +49,7 @@ const AssessmentTab = () => {
                 value={results.installationCost}
                 unit="₹"
                 color="warning"
-                icon={<CostIcon />}
+                icon="💰"
                 description="Estimated total implementation cost"
               />
             </Grid>
@@ -66,7 +60,7 @@ const AssessmentTab = () => {
                 value={results.paybackPeriod}
                 unit="years"
                 color="success"
-                icon={<TimeIcon />}
+                icon="⏰"
                 description="Time to recover investment"
               />
             </Grid>

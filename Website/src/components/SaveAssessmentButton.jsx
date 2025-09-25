@@ -11,13 +11,8 @@ import {
   Snackbar,
   Alert
 } from '@mui/material';
-import { 
-  Save as SaveIcon, 
-  Download as DownloadIcon,
-  PictureAsPdf as PdfIcon 
-} from '@mui/icons-material';
 import jsPDF from 'jspdf';
-import { useAppContext } from '../context/AppContext';
+import { useAppContext } from '../context/useAppContext';
 
 const SaveAssessmentButton = () => {
   const { state } = useAppContext();
@@ -178,7 +173,7 @@ const SaveAssessmentButton = () => {
       <Box sx={{ display: 'flex', gap: 2, mt: 3 }}>
         <Button
           variant="contained"
-          startIcon={<PdfIcon />}
+          startIcon={<span style={{ fontSize: '18px' }}>📄</span>}
           onClick={() => handleAction('pdf')}
           disabled={loading}
         >
@@ -187,7 +182,7 @@ const SaveAssessmentButton = () => {
         
         <Button
           variant="outlined"
-          startIcon={<SaveIcon />}
+          startIcon={<span style={{ fontSize: '18px' }}>💾</span>}
           onClick={() => handleAction('save')}
           disabled={loading}
         >
@@ -220,7 +215,7 @@ const SaveAssessmentButton = () => {
             onClick={executeAction}
             variant="contained"
             disabled={loading}
-            startIcon={loading ? <CircularProgress size={16} /> : (dialog.type === 'pdf' ? <DownloadIcon /> : <SaveIcon />)}
+            startIcon={loading ? <CircularProgress size={16} /> : (dialog.type === 'pdf' ? <span style={{ fontSize: '18px' }}>⬇️</span> : <span style={{ fontSize: '18px' }}>💾</span>)}
           >
             {loading ? 'Processing...' : (dialog.type === 'pdf' ? 'Download PDF' : 'Save')}
           </Button>

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useReducer } from 'react';
 
 // Initial state
 const initialState = {
@@ -9,6 +9,7 @@ const initialState = {
     roof_area: 100,
     open_space: 50,
     roof_type: "Concrete",
+    soil_type: "Loamy",
     roof_age: 5,
     assessment_id: null,
     results: null,
@@ -89,15 +90,6 @@ export const AppProvider = ({ children }) => {
       {children}
     </AppContext.Provider>
   );
-};
-
-// Custom hook to use context
-export const useAppContext = () => {
-  const context = useContext(AppContext);
-  if (!context) {
-    throw new Error('useAppContext must be used within AppProvider');
-  }
-  return context;
 };
 
 export default AppContext;

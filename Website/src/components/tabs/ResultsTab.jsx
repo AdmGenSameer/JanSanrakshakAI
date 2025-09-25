@@ -8,13 +8,8 @@ import {
   Divider,
   LinearProgress
 } from '@mui/material';
-import {
-  Water as WaterIcon,
-  Settings as EfficiencyIcon,
-  Build as TechIcon
-} from '@mui/icons-material';
 
-import { useAppContext } from '../../context/AppContext';
+import { useAppContext } from '../../context/useAppContext';
 import WaterBalanceChart from '../charts/WaterBalanceChart';
 import EfficiencyGauge from '../charts/EfficiencyGauge';
 import { formatNumber } from '../../utils/calculations';
@@ -78,7 +73,7 @@ const ResultsTab = () => {
           <Card elevation={3}>
             <CardContent>
               <Box display="flex" alignItems="center" mb={2}>
-                <WaterIcon color="primary" sx={{ mr: 1 }} />
+                <span style={{ color: '#1976d2', fontSize: '24px', marginRight: '8px' }}>💧</span>
                 <Typography variant="h6" color="primary">
                   Environmental Impact
                 </Typography>
@@ -133,7 +128,7 @@ const ResultsTab = () => {
           <Card elevation={3}>
             <CardContent>
               <Box display="flex" alignItems="center" mb={2}>
-                <TechIcon color="secondary" sx={{ mr: 1 }} />
+                <span style={{ color: '#9c27b0', fontSize: '24px', marginRight: '8px' }}>🔧</span>
                 <Typography variant="h6" color="secondary">
                   Technical Specifications
                 </Typography>

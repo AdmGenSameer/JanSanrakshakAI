@@ -107,6 +107,10 @@ export const validateFormData = (data) => {
   if (!data.roof_age || data.roof_age < 0 || data.roof_age > 50) {
     errors.roof_age = 'Roof age must be between 0 and 50 years';
   }
+  
+  if (!data.soil_type) {
+    errors.soil_type = 'Soil type is required';
+  }
 
   return {
     isValid: Object.keys(errors).length === 0,
@@ -124,27 +128,70 @@ export const generateSampleRainfallData = () => {
   }));
 };
 
+export const calculateInfiltrationRate = (soilType) => {
+  // Infiltration rates in mm/hr based on soil type
+  const infiltrationRates = {
+    'Sandy': 20, // High infiltration
+    'Loamy': 10, // Medium infiltration
+    'Clay': 3,   // Low infiltration
+    'Silt': 6,   // Medium-low infiltration
+    'Rocky': 8   // Variable, using average
+  };
+  
+  return infiltrationRates[soilType] || 8; // Default to medium if soil type not found
+};
+
 export const generateSampleResults = (userData) => {
   const annualRainfall = 800 + Math.random() * 400;
   const runoffCoeff = 0.7 + Math.random() * 0.2;
   const collectionEff = calculateCollectionEfficiency(userData.roof_type, userData.roof_age);
   const storageEff = calculateStorageEfficiency(userData.roof_area);
+  const infiltrationRate = calculateInfiltrationRate(userData.soil_type);
+  
+  // Adjust harvestable water based on soil type infiltration
   const harvestableWater = Math.round(userData.roof_area * annualRainfall * runoffCoeff * collectionEff);
+  
+  // Determine recommended structure based on soil type
+  let recommendedStructure = 'Underground Tank';
+  if (userData.soil_type === 'Sandy') {
+    recommendedStructure = 'Percolation Pit';
+  } else if (userData.soil_type === 'Clay') {
+    recommendedStructure = 'Surface Storage Tank';
+  } else if (userData.soil_type === 'Loamy') {
+    recommendedStructure = 'Recharge Well';
+  }
+  
+  // Adjust installation cost based on soil type and recommended structure
+  const baseCost = userData.roof_area * 150;
+  let structureCost = 50000;
+  if (recommendedStructure === 'Percolation Pit') {
+    structureCost = 35000;
+  } else if (recommendedStructure === 'Surface Storage Tank') {
+    structureCost = 60000;
+  } else if (recommendedStructure === 'Recharge Well') {
+    structureCost = 45000;
+  }
+  
+  const installationCost = Math.round(baseCost + structureCost);
+  const annualSavings = Math.round(harvestableWater * 0.02);
+  const paybackPeriod = Math.round(installationCost / annualSavings);
   
   return {
     annualRainfall,
     harvestableWater,
-    recommendedStructure: 'Underground Tank',
-    installationCost: Math.round(userData.roof_area * 150 + 50000),
-    annualSavings: Math.round(harvestableWater * 0.02),
-    paybackPeriod: Math.round((userData.roof_area * 150 + 50000) / (harvestableWater * 0.02)),
+    recommendedStructure,
+    installationCost,
+    annualSavings,
+    paybackPeriod,
     runoffCoeff,
     collectionEff,
     storageEff,
+    infiltrationRate,
     overallEfficiency: calculateOverallEfficiency(runoffCoeff, collectionEff, storageEff),
     environmentalImpact: calculateEnvironmentalImpact(harvestableWater),
-    aquiferType: 'Alluvial',
+    aquiferType: userData.soil_type === 'Sandy' ? 'Unconfined' : 
+                (userData.soil_type === 'Clay' ? 'Confined' : 'Semi-confined'),
     waterLevel: Math.round(Math.random() * 50 + 10),
-    soilType: 'Sandy Loam'
+    soilType: userData.soil_type
   };
 };

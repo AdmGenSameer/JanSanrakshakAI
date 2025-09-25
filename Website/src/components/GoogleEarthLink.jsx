@@ -1,8 +1,7 @@
 import React from 'react';
 import { Button, Box } from '@mui/material';
-import { Public as EarthIcon } from '@mui/icons-material';
 import { generateGoogleEarthLink } from '../utils/calculations';
-import { useAppContext } from '../context/AppContext';
+import { useAppContext } from '../context/useAppContext';
 
 const GoogleEarthLink = () => {
   const { state } = useAppContext();
@@ -22,7 +21,7 @@ const GoogleEarthLink = () => {
     <Box sx={{ mt: 2 }}>
       <Button
         variant="outlined"
-        startIcon={<EarthIcon />}
+        startIcon={<span style={{ fontSize: '18px' }}>🌍</span>}
         onClick={handleOpenGoogleEarth}
         color="secondary"
       >

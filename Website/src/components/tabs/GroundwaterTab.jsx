@@ -8,14 +8,8 @@ import {
   Chip,
   LinearProgress
 } from '@mui/material';
-import {
-  Water as WaterIcon,
-  TrendingUp as TrendIcon,
-  Nature as EcoIcon,
-  Science as QualityIcon
-} from '@mui/icons-material';
 
-import { useAppContext } from '../../context/AppContext';
+import { useAppContext } from '../../context/useAppContext';
 import WaterTrendsChart from '../charts/WaterTrendsChart';
 
 const GroundwaterTab = () => {
@@ -29,10 +23,15 @@ const GroundwaterTab = () => {
 
   const aquiferInfo = {
     type: results.aquiferType,
+    soilType: results.soilType || 'Loamy',
     depth: results.waterLevel,
-    rechargeRate: 'Moderate',
-    permeability: 'High',
-    yieldCapacity: '200-500 L/min'
+    rechargeRate: results.infiltrationRate > 15 ? 'High' : (results.infiltrationRate > 8 ? 'Moderate' : 'Low'),
+    permeability: results.soilType === 'Sandy' ? 'High' : 
+                 (results.soilType === 'Clay' ? 'Low' : 
+                 (results.soilType === 'Silt' ? 'Medium-Low' : 'Medium')),
+    yieldCapacity: results.soilType === 'Sandy' ? '400-600 L/min' : 
+                  (results.soilType === 'Clay' ? '50-150 L/min' : 
+                  (results.soilType === 'Silt' ? '100-300 L/min' : '200-500 L/min'))
   };
 
   const waterQualityParameters = [
@@ -65,7 +64,7 @@ const GroundwaterTab = () => {
           <Card elevation={3}>
             <CardContent>
               <Box display="flex" alignItems="center" mb={2}>
-                <WaterIcon color="primary" sx={{ mr: 1 }} />
+                <span style={{ color: '#1976d2', fontSize: '24px', marginRight: '8px' }}>💧</span>
                 <Typography variant="h6" color="primary">
                   Aquifer Characteristics
                 </Typography>
@@ -87,7 +86,25 @@ const GroundwaterTab = () => {
                   </Typography>
                 </Grid>
 
-                <Grid item xs={6}>
+                                <Grid item xs={12} sm={6}>
+                  <Typography variant="body2" color="text.secondary">
+                    Aquifer Type
+                  </Typography>
+                  <Typography variant="h6">
+                    {aquiferInfo.type}
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="body2" color="text.secondary">
+                    Soil Type
+                  </Typography>
+                  <Typography variant="h6">
+                    {aquiferInfo.soilType}
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
                   <Typography variant="body2" color="text.secondary">
                     Water Depth
                   </Typography>
@@ -96,7 +113,7 @@ const GroundwaterTab = () => {
                   </Typography>
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={6}>
                   <Typography variant="body2" color="text.secondary">
                     Recharge Rate
                   </Typography>
@@ -107,7 +124,7 @@ const GroundwaterTab = () => {
                   />
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={6}>
                   <Typography variant="body2" color="text.secondary">
                     Permeability
                   </Typography>
@@ -118,7 +135,7 @@ const GroundwaterTab = () => {
                   />
                 </Grid>
 
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={6}>
                   <Typography variant="body2" color="text.secondary">
                     Yield Capacity
                   </Typography>
